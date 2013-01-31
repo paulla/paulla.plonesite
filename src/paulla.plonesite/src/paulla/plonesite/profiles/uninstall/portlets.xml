@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portlets
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    i18n:domain="paulla.plonesite">
+<!--
+  <portlet
+      addview="paulla.plonesite.browser.portlet.Portlet"
+      title = "paulla.plonesite portlet"
+      title = "Add a paulla.plonesite portlet"
+      remove="True"
+    />
+-->
+</portlets>

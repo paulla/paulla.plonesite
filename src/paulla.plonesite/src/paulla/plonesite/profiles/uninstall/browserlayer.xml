@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<layers>
+  <layer remove="true" name="paulla.plonesite-theme" interface="paulla.plonesite.interfaces.IThemeSpecific"/>
+  <layer remove="true" name="paulla.plonesite" interface="paulla.plonesite.interfaces.ILayer"/>
+</layers>

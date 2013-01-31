@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="paulla.plonesite">
+
+  <!-- ' paulla.plonesite' Zope 3 browser layer -->
+  <interface name="paulla.plonesite-theme"
+      interface="paulla.plonesite.interfaces.IThemeSpecific"
+      type="zope.publisher.interfaces.browser.IBrowserSkinType"
+    />
+  <interface  name="paulla.plonesite" interface="paulla.plonesite.interfaces.ILayer" />
+
+  <!-- Viewlets registration -->
+
+  <!-- Zope 3 browser views -->
+  <!--
+  <include package="plone.app.contentmenu"/> 
+    <browser:page
+        layer="paulla.plonesite.interfaces.ILayer"
+        for="paulla.plonesite.interface.mycontent"
+        menu="plone_displayviews"
+        name="MyView"
+        class=".view.MyView"
+        allowed_interface=".view.IMyView"
+        permission="zope2.View"
+      />
+  -->
+
+  <!-- Zope 3 browser resources -->
+
+  <!-- Resource directory -->
+  <browser:resourceDirectory
+      name="paulla.plonesite"
+      directory="resources"
+      layer="paulla.plonesite.interfaces.ILayer"
+    />
+
+
+  <!-- vim:set ft=xml: -->
+</configure>
