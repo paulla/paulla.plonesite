@@ -1,0 +1,103 @@
+#!/bin/sh
+#
+# Startup script for supervisord server.
+#
+# $FreeBSD: ports/www/multisupervisord/files/multisupervisord.in,v 1.2 2012/01/14 08:57:22 dougb Exp $
+#
+# PROVIDE: multisupervisord
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+# Define these multisupervisord_* variables in one of these files:
+# /etc/rc.conf
+# /etc/rc.conf.local
+#
+# multisupervisord_enable : bool
+# Enable supervisord ("YES") or not ("NO", the default).
+#
+# multisupervisord_instances : list
+# List of dirs with supervisord's instances ("" by default).
+#
+
+. /etc/rc.subr
+
+name="multisupervisord"
+procname="multisupervisord"
+rcvar=multisupervisord_enable
+
+load_rc_config $name
+
+: ${multisupervisord_enable:="NO"}
+
+multisupervisord_check_instances () {
+	cmd="$1"
+	shift
+
+	if [ -n "$*" ]; then
+		multisupervisord_instances="$@"
+	elif [ -z "$multisupervisord_instances" ]; then
+		err 1 "No value for multisupervisord_instances, so nothing to do"
+	fi
+}
+
+multisupervisordctl () {
+	local instance
+
+	for instance in $multisupervisord_instances; do
+		if [ -d ${instance} ]; then
+			echo -e " supervisord instance ${instance} -> "
+			/usr/local/bin/bash ${instance}/etc/init.d/supervisor.initd "$1"
+		fi
+	done
+}
+
+multisupervisorctl () {
+	local instance
+
+	for instance in $multisupervisord_instances; do
+		if [ -d ${instance} ]; then
+			echo -e "\n supervisord instance ${instance} : "
+			${instance}/bin/supervisorctl "$1"
+		fi
+	done
+}
+
+multisupervisord_start () {
+	multisupervisord_check_instances
+	echo -n 'Starting supervisord:'
+	multisupervisordctl "start"
+	echo '.'
+}
+
+multisupervisorctl_status () {
+	multisupervisord_check_instances
+	echo -n 'Get status supervisord:'
+	multisupervisorctl "status"
+	echo '.'
+}
+multisupervisord_stop () {
+	multisupervisord_check_instances
+	echo -n 'Stopping supervisord:'
+	multisupervisordctl "stop"
+	echo '.'
+}
+
+multisupervisord_restart () {
+	multisupervisord_check_instances
+	echo -n 'Restarting supervisord:'
+	multisupervisordctl "restart"
+	echo '.'
+}
+
+start_cmd="${name}_start"
+status_cmd="multisupervisorctl_status"
+stop_cmd="${name}_stop"
+restart_cmd="${name}_restart"
+
+cmd="$1"
+shift
+if [ -n  "$*" ]; then
+	multisupervisord_instances="$@"
+fi
+
+run_rc_command "${cmd}"

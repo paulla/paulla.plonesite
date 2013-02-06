@@ -2,7 +2,7 @@ title:string=paulla.plonesite's color, font, logo and border defaults
 
 plone_plonesite:string=paulla.plonesite
 
-logoName:string=logo.jpg
+logoName:string=logo.png
 
 fontFamily:string="Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif
 fontBaseSize:string=69%
